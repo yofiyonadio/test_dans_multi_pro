@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: TEST-Dans-Multi-Pro.yaml
+  description: ''
+  contact: {}
+  version: '1.0'
+servers:
+- url: 'http://localhost:5500'
+  variables:
+    _.baseURL:
+      default: DefaultParameterValue
+paths:
+  /v1/user/login:
+    post:
+      tags:
+      - User
+      summary: Login
+      description: ''
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginRequest'
+              - example:
+                  username: admin1
+                  password: '123456'
+            example:
+              username: admin1
+              password: '123456'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+  /v1/job:
+    get:
+      tags:
+      - Job
+      summary: Get Jobs
+      description: ''
+      operationId: GetJobs
+      parameters:
+      - name: page
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: '2'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /v1/job/32bf67e5-4971-47ce-985c-44b6b3860cdb:
+    get:
+      tags:
+      - Job
+      summary: Get Job Detail
+      description: ''
+      operationId: GetJobDetail
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /v1:
+    get:
+      summary: Base
+      description: ''
+      operationId: Base
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - username
+      - password
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: admin1
+        password: '123456'
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: User
+  description: ''
+- name: Job
+  description: ''

@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: node_backlien
+    image: node_backlien
+    restart: "no"
+    ports:
+      - "5500:5500"
+    networks:
+      - backlien_network
+    depends_on:
+      db:
+        condition: service_healthy
+    command: bash -c "npx gulp docker_env && npm run migrate && npm run test && npm run dev"
+  db:
+    container_name: postgres_backlien
+    image: postgres:14.1
+    healthcheck:
+      test: "exit 0"
+    restart: "no"
+    environment:
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5522:5432"
+    networks:
+      - backlien_network
+networks:
+  backlien_network:
+    name: backlien_network
